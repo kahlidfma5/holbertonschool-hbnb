@@ -1,0 +1,73 @@
+---
+config:
+  theme: forest
+  layout: elk
+---
+classDiagram
+    direction TB
+
+    %% Classes
+    class BaseModel {
+        +id: UUID
+        +created_by: string
+        +updated_by: string
+        +created_at: datetime
+        +updated_at: datetime
+    }
+
+    class User {
+        +first_name: string
+        +last_name: string
+        +email: string
+        +password: string
+        +is_admin: boolean
+        +register()
+        +update()
+        +delete()
+    }
+
+    class Place {
+        +title: string
+        +description: string
+        +price: float
+        +latitude: float
+        +longitude: float
+        +owner: User
+        +amenities: Amenity[]
+        +create()
+        +update()
+        +delete()
+        +list_places()
+    }
+
+    class Amenity {
+        +name: string
+        +description: string
+        +create()
+        +update()
+        +delete()
+        +list_amenities()
+    }
+
+    class Review {
+        +place: Place
+        +user: User
+        +rating: int
+        +comment: string
+        +create()
+        +update()
+        +delete()
+        +list_reviews()
+    }
+
+    %% Inheritance
+    User --|> BaseModel
+    Place --|> BaseModel
+    Amenity --|> BaseModel
+    Review --|> BaseModel
+
+    %% Associations
+    User "1" --* "0..*" Place : owns >
+    User "1" --* "0..*" Review : writes >
+    Place "1" --* "0..*" Review : has >
+    Place "1" --* "0..*" Amenity : includes >
