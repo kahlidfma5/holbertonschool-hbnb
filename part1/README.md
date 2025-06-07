@@ -92,6 +92,20 @@ This will help ensuring maintainability, and scalability.
 ### Review Submission
 <img src="./review submission.svg">
 
+#### Purpose of the Diagram:
+   This sequence diagram illustrates the workflow of submitting a review, detailing how the user interacts with the system and how data flows between the UI, Business Logic Layer, and Persistence Layer.
+#### Key Steps
+The provided file is an SVG (Scalable Vector Graphics) file that appears to depict a sequence diagram for a "Review Submission" process. Here's a breakdown of its content and purpose:
+
+### Key Elements of the Diagram:
+   - **1. Click "Add Review"**: The user initiates the process by clicking the "Add Review" button.
+   - **2. Request Add Review Page**: The UI sends a request to the Business Logic Layer to fetch the add review page.
+   - **3. Return Add Review Page**: The Business Logic Layer returns the add review page to the UI.
+   - **4. Display Add Review Page**: The UI displays the add review page to the user.
+   - **5. Submit Add Review Form**: The user fills out and submits the review form.
+   - **6. Validate Data**: The Business Logic Layer validates the submitted review data.
+   - **7. Save Data**: The validated data is saved to the Persistence Layer.
+
 ### User Registration
 <img src="./user_register.svg">
 
