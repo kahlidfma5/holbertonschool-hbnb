@@ -13,7 +13,6 @@
 
 ### Project Overview
 This document describes the architecture and design of a simplified version of an AirBnB-like application, named HBnB Evolution. The application will allow users to perform the following primary operations:
-
     **User Management**: Users can register, update their profiles, and be identified as either regular users or administrators.
     **Place Management**: Users can list properties (places) they own, specifying details such as name, description, price, and location (latitude and longitude). Each place can also have a list of amenities.
     **Review Management**: Users can leave reviews for places they have visited, including a rating and a comment.
@@ -32,6 +31,7 @@ The application architecture and design follows the three-layer architecture usi
 This will help ensuring maintainability, and scalability.
 
 ### Package Diagram
+![Alt text](./Package Diagram.svg)
+<img src="./Package Diagram.svg">
 
-![Package Diagram](Package Diagram.svg)
 
