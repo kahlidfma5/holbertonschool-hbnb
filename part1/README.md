@@ -106,6 +106,17 @@ This will help ensuring maintainability, and scalability.
 ### User Registration
 <img src="./user_register.svg">
 
+#### Purpose of the Diagram:
+   This diagram visually explains the flow of a user registration process, showing how different system layers interact to complete the registration. It is useful for understanding the system architecture and debugging or improving the registration workflow.
+#### Key Steps
+   1. **User clicks on register**: The user initiates the registration process by clicking the register button.
+   2. **Request register page**: The UI sends a request to the Business Logic Layer to load the registration page.
+   3. **Return register page**: The Business Logic Layer returns the registration page to the UI.
+   4. **Display Register page**: The UI displays the registration form to the user.
+   5. **Submit register form**: The user fills out and submits the registration form.
+   6. **Validate data & check user availability**: The Business Logic Layer validates the submitted data and checks if the user is available (e.g., username/email uniqueness).
+   7. **Save data**: The validated user data is saved to the Persistence Layer.
+
 ### Create new place
 <img src="./Place Creation sequence diagram.svg">
 
