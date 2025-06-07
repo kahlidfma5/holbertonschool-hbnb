@@ -33,7 +33,7 @@ This will help ensuring maintainability, and scalability.
 <img src="./Package Diagram.svg">
 
 ### class Diagram
-<img src="./class_diagram.svg">
+<img src="./class diagram.svg">
 
 ## 3. Some APIs sequences diagrams
 ### Places List
@@ -44,6 +44,9 @@ This will help ensuring maintainability, and scalability.
 
 ### User Registration
 <img src="./user_register.svg">
+
+### Create new place
+<img src="./Place Creation sequence diagram.svg">
 
 
 
