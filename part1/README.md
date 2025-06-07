@@ -39,11 +39,56 @@ This will help ensuring maintainability, and scalability.
    - **Role**: Contains core business rules (e.g., validating reviews, calculating pricing).
 
 #### Persistence Layer
-- **Repositories*: UserRepository, ReviewRepository, PlaceRepository, AmenityRepository.
+- **Repositories**: UserRepository, ReviewRepository, PlaceRepository, AmenityRepository.
    - **Role**: Handles database operations (CRUD) and abstracts the data store (e.g., MySQL).
 
-### class Diagram
+### Class Diagram
 <img src="./class diagram.svg">
+Here’s a concise analysis of the **HBnB Class Diagram** (SVG file) with key observations, strengths, and potential improvements:
+
+---
+
+#### **1. Core Classes & Inheritance**
+- **`BaseModel`**:  
+  - Parent class with common fields (`id`, `created_at`, `updated_at`, etc.).  
+  - **Child classes**: `User`, `Place`, `Review`, `Amenity` inherit from it.  
+  - **Note**: Ensures consistent audit trails (timestamps, ownership) across entities.
+
+---
+
+#### **2. Key Classes & Attributes**
+##### **`User`**
+- **Fields**: `first_name`, `last_name`, `email`, `password`, `is_admin`.  
+- **Methods**: `register()`, `update()`, `delete()`.  
+- **Role**: Manages authentication and user profiles.  
+- **Observation**: Missing `role` field (e.g., `host`/`guest` differentiation).  
+
+##### **`Place`**  
+- **Fields**: `title`, `description`, `price`, `latitude/longitude`, `owner` (User), `amenities` (list).  
+- **Methods**: CRUD operations + `list_places()`.  
+- **Association**: Aggregates `Amenity` (many-to-many implied).  
+
+##### **`Review`**  
+- **Fields**: `place`, `user`, `rating`, `comment`.  
+- **Methods**: CRUD + `list_reviews()`.  
+- **Association**: Depends on `User` and `Place` (composition).  
+
+##### **`Amenity`**  
+- **Fields**: `name`, `description`.  
+- **Methods**: CRUD + `list_amenities()`.  
+- **Association**: Linked to `Place` (many-to-many via `amenities` field).  
+
+---
+
+#### **3. Relationships**
+1. **User → Place** (`0..n`):  
+   - Diamond arrow (composition): A `User` owns zero-or-many `Place` objects.  
+2. **User → Review** (`0..n`):  
+   - Diamond arrow: A `User` writes zero-or-many `Review` objects.  
+3. **Place → Review** (`0..n`):  
+   - Diamond arrow: A `Place` has zero-or-many `Review` objects.  
+4. **Place ↔ Amenity** (`n..n`):  
+   - Bidirectional association: A `Place` can have multiple `Amenity` objects, and vice versa.  
 
 ## 3. Some APIs sequences diagrams
 ### Places List
