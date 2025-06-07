@@ -37,7 +37,7 @@ This will help ensuring maintainability, and scalability.
 <img src="./places list.svg">
 
 ### Review Submission
-<img src="./reveiw submission.svg">
+<img src="./review submission.svg">
 
 ### User Registration
 <img src="./user_register.svg">
