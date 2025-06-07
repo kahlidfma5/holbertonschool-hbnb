@@ -22,11 +22,6 @@ This document describes the architecture and design of a simplified version of a
 
 ### Overview
 The application architecture and design follows the three-layer architecture using Facade pattern. 
-
-- **Presentation Layer:** Handles HTTP requests and responses, user interface, and client interactions.
-- **Business Logic Layer:** Contains core domain entities and business rules.
-- **Persistence Layer:** Manages data storage and retrieval, interacting with the database.
-
 This will help ensuring maintainability, and scalability.
 
 ### Package Diagram
@@ -35,6 +30,13 @@ This will help ensuring maintainability, and scalability.
 #### Presentation Layer
 - **Components**: User UI, Review UI, Place UI, Amenity UI.
 - **Purpose**: Handles user interactions (e.g., booking a place, submitting reviews).
+
+#### Business Logic Layer
+- **Facades**: UserFacade, ReviewFacade, PlaceFacade, AmenityFacade.
+   - **Role**: Acts as an interface for the Presentation Layer, abstracting complex operations (e.g., PlaceFacade might bundle place search + booking logic).
+
+- **Services**: UserService, ReviewService, PlaceService, AmenityService.
+   - **Role**: Contains core business rules (e.g., validating reviews, calculating pricing).
 
 ### class Diagram
 <img src="./class diagram.svg">
