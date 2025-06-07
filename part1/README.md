@@ -38,6 +38,10 @@ This will help ensuring maintainability, and scalability.
 - **Services**: UserService, ReviewService, PlaceService, AmenityService.
    - **Role**: Contains core business rules (e.g., validating reviews, calculating pricing).
 
+#### Persistence Layer
+- **Repositories*: UserRepository, ReviewRepository, PlaceRepository, AmenityRepository.
+   - **Role**: Handles database operations (CRUD) and abstracts the data store (e.g., MySQL).
+
 ### class Diagram
 <img src="./class diagram.svg">
 
