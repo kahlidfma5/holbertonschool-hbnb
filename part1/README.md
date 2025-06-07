@@ -32,6 +32,10 @@ This will help ensuring maintainability, and scalability.
 ### Package Diagram
 <img src="./Package Diagram.svg">
 
+### Presentation Layer
+**Components**: User UI, Review UI, Place UI, Amenity UI.
+**Purpose**: Handles user interactions (e.g., booking a place, submitting reviews).
+
 ### class Diagram
 <img src="./class diagram.svg">
 
