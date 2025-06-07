@@ -3,9 +3,8 @@
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [High-Level Architecture](#high-level-architecture)
-3. [Business Logic Layer](#business-logic-layer)
-4. [API Interaction Flow](#api-interaction-flow)
-5. [Conclusion](#conclusion)
+3. [API Interaction Flow](#api-interaction-flow)
+4. [Conclusion](#conclusion)
 
 ---
 
@@ -33,6 +32,10 @@ This will help ensuring maintainability, and scalability.
 ### Package Diagram
 <img src="./Package Diagram.svg">
 
+### class Diagram
+<img src="./class_diagram.svg">
+
+## 3. Some APIs sequences diagrams
 ### Places List
 <img src="./places list.svg">
 
