@@ -1,0 +1,37 @@
+# HBnB Evolution Application - Technical Documentation
+
+## Table of Contents
+1. [Introduction](#introduction)
+2. [High-Level Architecture](#high-level-architecture)
+3. [Business Logic Layer](#business-logic-layer)
+4. [API Interaction Flow](#api-interaction-flow)
+5. [Conclusion](#conclusion)
+
+---
+
+## 1. Introduction
+
+### Project Overview
+This document describes the architecture and design of a simplified version of an AirBnB-like application, named HBnB Evolution. The application will allow users to perform the following primary operations:
+
+    **User Management**: Users can register, update their profiles, and be identified as either regular users or administrators.
+    **Place Management**: Users can list properties (places) they own, specifying details such as name, description, price, and location (latitude and longitude). Each place can also have a list of amenities.
+    **Review Management**: Users can leave reviews for places they have visited, including a rating and a comment.
+    **Amenity Management**: The application will manage amenities that can be associated with places.
+
+
+## 2. High-Level Architecture
+
+### Overview
+The application architecture and design follows the three-layer architecture using Facade pattern. 
+
+- **Presentation Layer:** Handles HTTP requests and responses, user interface, and client interactions.
+- **Business Logic Layer:** Contains core domain entities and business rules.
+- **Persistence Layer:** Manages data storage and retrieval, interacting with the database.
+
+This will help ensuring maintainability, and scalability.
+
+### Package Diagram
+
+![Package Diagram](Package Diagram.svg)
+
