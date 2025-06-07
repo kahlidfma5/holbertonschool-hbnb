@@ -57,7 +57,6 @@ This will help ensuring maintainability, and scalability.
 - **Fields**: `first_name`, `last_name`, `email`, `password`, `is_admin`.  
 - **Methods**: `register()`, `update()`, `delete()`.  
 - **Role**: Manages authentication and user profiles.  
-- **Observation**: Missing `role` field (e.g., `host`/`guest` differentiation).  
 
 ##### **`Place`**  
 - **Fields**: `title`, `description`, `price`, `latitude/longitude`, `owner` (User), `amenities` (list).  
