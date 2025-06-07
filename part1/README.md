@@ -31,7 +31,17 @@ The application architecture and design follows the three-layer architecture usi
 This will help ensuring maintainability, and scalability.
 
 ### Package Diagram
-![Alt text](./Package Diagram.svg)
 <img src="./Package Diagram.svg">
+
+### Places List
+<img src="./places list.svg">
+
+### Review Submission
+<img src="./reveiw submission.svg">
+
+### User Registration
+<img src="./user_register.svg">
+
+
 
 
