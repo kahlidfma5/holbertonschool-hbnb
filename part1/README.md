@@ -17,6 +17,7 @@ This document describes the architecture and design of a simplified version of a
     **Review Management**: Users can leave reviews for places they have visited, including a rating and a comment.
     **Amenity Management**: The application will manage amenities that can be associated with places.
 
+---
 
 ## 2. High-Level Architecture
 
@@ -44,17 +45,12 @@ This will help ensuring maintainability, and scalability.
 
 ### Class Diagram
 <img src="./class diagram.svg">
-Here’s a concise analysis of the **HBnB Class Diagram** (SVG file) with key observations, strengths, and potential improvements:
-
----
 
 #### **1. Core Classes & Inheritance**
 - **`BaseModel`**:  
   - Parent class with common fields (`id`, `created_at`, `updated_at`, etc.).  
   - **Child classes**: `User`, `Place`, `Review`, `Amenity` inherit from it.  
   - **Note**: Ensures consistent audit trails (timestamps, ownership) across entities.
-
----
 
 #### **2. Key Classes & Attributes**
 ##### **`User`**
@@ -78,8 +74,6 @@ Here’s a concise analysis of the **HBnB Class Diagram** (SVG file) with key ob
 - **Methods**: CRUD + `list_amenities()`.  
 - **Association**: Linked to `Place` (many-to-many via `amenities` field).  
 
----
-
 #### **3. Relationships**
 1. **User → Place** (`0..n`):  
    - Diamond arrow (composition): A `User` owns zero-or-many `Place` objects.  
@@ -89,6 +83,8 @@ Here’s a concise analysis of the **HBnB Class Diagram** (SVG file) with key ob
    - Diamond arrow: A `Place` has zero-or-many `Review` objects.  
 4. **Place ↔ Amenity** (`n..n`):  
    - Bidirectional association: A `Place` can have multiple `Amenity` objects, and vice versa.  
+
+---
 
 ## 3. Some APIs sequences diagrams
 ### Places List
