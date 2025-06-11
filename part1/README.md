@@ -4,7 +4,6 @@
 1. [Introduction](#introduction)
 2. [High-Level Architecture](#high-level-architecture)
 3. [API Interaction Flow](#api-interaction-flow)
-4. [Conclusion](#conclusion)
 
 ---
 
