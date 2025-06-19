@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 
+
 api = Namespace('amenities', description='Amenity operations')
 
 # Define the amenity model for input validation and documentation
@@ -10,25 +11,27 @@ amenity_model = api.model('Amenity', {
 
 @api.route('/')
 class AmenityList(Resource):
-  @api.expect(amenity_model)
-  @api.response(201, 'Amenity successfully created')
-  @api.response(400, 'Invalid input data')
-  def post(self):
-    """Register a new amenity"""
-    amenity_data = api.payload
+    @api.expect(amenity_model)
+    @api.response(201, 'Amenity successfully created')
+    @api.response(400, 'Invalid input data')
+    def post(self):
+        """Register a new amenity"""
+        amenity_data = api.payload
     
-    if amaenity['name']:
-        return {'error': 'Amenity name should have a value'}, 400
-    if len(amenity['name']) > 0 and len(amenity['name']) <= 50 :
-        return {'error': 'The maximum length of the amenity name is 50 characters'}, 400
-    
-    new_amenity = facade.create_amenity(amenity_data)
-    return {'id': new_amenity.id, 'name': new_amenity.name}, 201
+        if not amenity_data['name']:
+            return {'error': 'Amenity name should have a value'}, 400
+        if len(amenity_data['name']) <= 1 and len(amenity_data['name']) > 50 :
+            return {'error': 'The maximum length of the amenity name is 50 characters'}, 400
+        
+        new_amenity = facade.create_amenity(amenity_data)
+        return {'id': new_amenity.id, 'name': new_amenity.name}, 201
 
     @api.response(200, 'List of amenities retrieved successfully')
     def get(self):
         """Retrieve a list of all amenities"""
-        return get_all_amenities(), 200
+        amenities = facade.get_all_amenities()
+        print(amenities)
+        return {'amenities': [{'id': amenity.id, 'name': amenity.name} for amenity in amenities]}, 200
 
 @api.route('/<amenity_id>')
 class AmenityResource(Resource):
@@ -51,9 +54,9 @@ class AmenityResource(Resource):
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {'error': 'Amenity not found'}, 404
-        if amaenity['name']:
+        if not amenity_data['name']:
             return {'error': 'Amenity name should have a value'}, 400
-        if len(amenity['name']) > 0 and len(amenity['name']) <= 50 :
+        if len(amenity_data['name']) <= 1 and len(amenity_data['name']) > 50 :
             return {'error': 'The maximum length of the amenity name is 50 characters'}, 400
-        update_amenity(amenity_id, amenity_data)
-        return 200
+        facade.update_amenity(amenity_id, amenity_data)
+        return {"message": "Amenity updated successfully"}, 200
