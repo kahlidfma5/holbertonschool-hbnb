@@ -53,9 +53,9 @@ class AmenityResource(Resource):
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {'error': 'Amenity not found'}, 404
-        if not amenity_data['name']:
+        """ if not amenity_data['name']:
             return {'error': 'Amenity name should have a value'}, 400
         if len(amenity_data['name']) <= 1 and len(amenity_data['name']) > 50 :
-            return {'error': 'The maximum length of the amenity name is 50 characters'}, 400
+            return {'error': 'The maximum length of the amenity name is 50 characters'}, 400 """
         facade.update_amenity(amenity_id, amenity_data)
         return {"message": "Amenity updated successfully"}, 200

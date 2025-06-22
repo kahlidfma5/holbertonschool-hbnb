@@ -2,6 +2,7 @@ from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
+from app.models.review import Review
 
 class HBnBFacade:
     def __init__(self):
@@ -48,3 +49,25 @@ class HBnBFacade:
 
     def update_place(self, place_id, place_data):
         self.place_repo.update(place_id, place_data)
+        
+    def create_review(self, review_data):
+       review = Review(**review_data)
+       self.review_repo.add(review)
+       return review 
+
+    def get_review(self, review_id):
+        return self.review_repo.get(review_id)
+
+    def get_all_reviews(self):
+        return self.review_repo.get_all()
+
+    def get_reviews_by_place(self, place_id):
+        # Placeholder for logic to retrieve all reviews for a specific place
+        reviews = self.get_all_reviews()
+        return [review for review in reviews if review.place_id == place_id]
+
+    def update_review(self, review_id, review_data):
+        self.review_repo.update(review_id, review_data)
+
+    def delete_review(self, review_id):
+        self.review_repo.delete(review_id)
