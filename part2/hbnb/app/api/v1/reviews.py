@@ -16,9 +16,17 @@ class ReviewList(Resource):
     @api.expect(review_model)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
+    @api.response(404, 'User not found')
+    @api.response(404, 'Place not found')
     def post(self):
         """Register a new review"""
         review_data = api.payload
+        user = facade.get_user(review_data["user_id"])
+        if not user:
+            return {'error': 'User not found'}, 404
+        place = facade.get_place(review_data["place_id"])
+        if not place:
+            return {'error': 'Place not found'}, 404
         
         new_review = facade.create_review(review_data)
         return {'id': new_review.id, 'text': new_review.text,
@@ -72,7 +80,7 @@ class ReviewResource(Resource):
         review = facade.get_review(review_id)
         if not review:
             return {'error': 'Review not found'}, 404
-        facade.delete(review_id) 
+        facade.delete_review(review_id) 
 
 @api.route('/places/<place_id>/reviews')
 class PlaceReviewList(Resource):
@@ -80,4 +88,12 @@ class PlaceReviewList(Resource):
     @api.response(404, 'Place not found')
     def get(self, place_id):
         """Get all reviews for a specific place"""
-        return facade.get_reviews_by_place(place_id)
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+        reviews = facade.get_reviews_by_place(place_id)
+        return [{'id': review.id, 'text': review.text,
+                'rating': review.rating,
+                'user_id': review.user_id,
+                'place_id': review.place_id,
+                } for review in reviews], 200
