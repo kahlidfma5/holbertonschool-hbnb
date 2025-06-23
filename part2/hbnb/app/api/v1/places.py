@@ -66,12 +66,18 @@ class PlaceResource(Resource):
         place = facade.get_place(place_id)
         if not place:
             return {'error': 'Place not found'}, 404
+        reviews = facade.get_reviews_by_place(place_id)
         return {'id': place.id, 'title': place.title,
                 'description': place.description,
                 'price': place.price,
                 'latitude': place.latitude,
                 'longitude': place.longitude,
                 'owner_id': place.owner_id,
+                'reviews': [{'id': review.id, 'text': review.text,
+                             'rating': review.rating,
+                             'user_id': review.user_id,
+                             'place_id': review.place_id,
+                             } for review in reviews]
                 }, 200
 
     @api.expect(place_model)
