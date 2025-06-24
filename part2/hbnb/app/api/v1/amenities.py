@@ -17,14 +17,12 @@ class AmenityList(Resource):
     def post(self):
         """Register a new amenity"""
         amenity_data = api.payload
-    
-        if not amenity_data['name']:
-            return {'error': 'Amenity name should have a value'}, 400
-        if len(amenity_data['name']) <= 1 and len(amenity_data['name']) > 50 :
-            return {'error': 'The maximum length of the amenity name is 50 characters'}, 400
         
-        new_amenity = facade.create_amenity(amenity_data)
-        return {'id': new_amenity.id, 'name': new_amenity.name}, 201
+        try:
+            new_amenity = facade.create_amenity(amenity_data)
+            return {'id': new_amenity.id, 'name': new_amenity.name}, 201
+        except ValueError as e:
+            api.abort(400, e)
 
     @api.response(200, 'List of amenities retrieved successfully')
     def get(self):
@@ -53,9 +51,5 @@ class AmenityResource(Resource):
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {'error': 'Amenity not found'}, 404
-        """ if not amenity_data['name']:
-            return {'error': 'Amenity name should have a value'}, 400
-        if len(amenity_data['name']) <= 1 and len(amenity_data['name']) > 50 :
-            return {'error': 'The maximum length of the amenity name is 50 characters'}, 400 """
         facade.update_amenity(amenity_id, amenity_data)
         return {"message": "Amenity updated successfully"}, 200

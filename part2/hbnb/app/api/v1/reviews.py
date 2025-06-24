@@ -28,12 +28,15 @@ class ReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         
-        new_review = facade.create_review(review_data)
-        return {'id': new_review.id, 'text': new_review.text,
-                'rating': new_review.rating,
-                'user_id': new_review.user_id,
-                'place_id': new_review.place_id,
-                }, 201
+        try:
+            new_review = facade.create_review(review_data)
+            return {'id': new_review.id, 'text': new_review.text,
+                    'rating': new_review.rating,
+                    'user_id': new_review.user_id,
+                    'place_id': new_review.place_id,
+                    }, 201
+        except ValueError as e:
+            api.abort(400, e)
 
     @api.response(200, 'List of reviews retrieved successfully')
     def get(self):
