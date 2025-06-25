@@ -20,4 +20,4 @@ The directory structure is organized as follows:
 3. Run the application: `python run.py`
 
 ## Run the test
-python -m unittest discover tests
+`python -m unittest discover tests`
