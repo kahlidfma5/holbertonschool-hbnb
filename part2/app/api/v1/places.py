@@ -94,5 +94,8 @@ class PlaceResource(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         place_data = api.payload
-        facade.update_place(place_id, place_data)
-        return {"message": "Place updated successfully"}, 200
+        try:
+            facade.update_place(place_id, place_data)
+            return {"message": "Place updated successfully"}, 200
+        except ValueError as e:
+            api.abort(400,e)

@@ -42,8 +42,21 @@ class TestUserEndpoints(unittest.TestCase):
     def test_get_invalid_user(self):
         response = self.client.get(f'/api/v1/users/invalid_user_id')        
         self.assertEqual(response.status_code, 404)
-
-
+    
+    def test_update_user(self):
+        response = self.client.post('/api/v1/users/', json={
+            "first_name": "first name",
+            "last_name": "last name",
+            "email": "user@gmail.com"
+        })
+        created_user = json.loads(response.data)
+        user_id = created_user['id']
+        response = self.client.put(f'/api/v1/users/{user_id}', json={
+            "first_name": "first name",
+            "last_name": "last name",
+            "email": "user@hotmail.com"
+            })
+        self.assertEqual(response.status_code, 200)
 
 if __name__ == '__main__':
     unittest.main()

@@ -51,5 +51,8 @@ class AmenityResource(Resource):
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {'error': 'Amenity not found'}, 404
-        facade.update_amenity(amenity_id, amenity_data)
-        return {"message": "Amenity updated successfully"}, 200
+        try:
+            facade.update_amenity(amenity_id, amenity_data)
+            return {"message": "Amenity updated successfully"}, 200
+        except ValueError as e:
+            api.abort(400, e)

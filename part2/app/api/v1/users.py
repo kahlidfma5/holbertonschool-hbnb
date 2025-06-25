@@ -53,5 +53,8 @@ class UserResource(Resource):
         if not user:
             return {'error': 'User not found'}, 404
         user_data = api.payload
-        facade.update_user(user_id, user_data)
-        return {"message": "User updated successfully"}, 200
+        try:
+            facade.update_user(user_id, user_data)
+            return {"message": "User updated successfully"}, 200
+        except ValueError as e:
+            api.abort(400, e)
