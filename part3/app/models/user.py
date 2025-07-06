@@ -1,6 +1,7 @@
 from app.models.BaseModel import BaseModel
 from flask_bcrypt import Bcrypt
 
+bcrypt = Bcrypt()
 class User(BaseModel):
     def __init__(self, first_name, last_name, email, password, is_admin=False):
         super().__init__()
@@ -9,7 +10,7 @@ class User(BaseModel):
         self.email = email
         self.password = password
         self.is_admin = is_admin
-        self.bcrypt = Bcrypt()
+
     
     @property
     def first_name(self):
@@ -71,11 +72,11 @@ class User(BaseModel):
         return self.__password
 
     @password.setter
-    def hash_password(self, password):
+    def password(self, value):
         """
         Hashes the password before storing it.
         """
-        self.password = self.bcrypt.generate_password_hash(password).decode('utf-8')
+        self.__password = bcrypt.generate_password_hash(value).decode('utf-8')
 
     @property
     def is_admin(self):
