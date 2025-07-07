@@ -1,6 +1,9 @@
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+import logging
 
+logging.basicConfig(level=logging.INFO)
 api = Namespace('users', description='User operations')
 
 # Define the user model for input validation and documentation
@@ -20,6 +23,7 @@ class UserList(Resource):
     def post(self):
         """Register a new user"""
         user_data = api.payload
+        api.logger.info(f'User data for creation is {user_data}')
 
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
         existing_user = facade.get_user_by_email(user_data['email'])
@@ -47,13 +51,26 @@ class UserResource(Resource):
     @api.response(200, 'User updated successfully')
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Unauthorized action')
+    @jwt_required()
     def put(self, user_id):
         """Update a users's information"""
-        
         user = facade.get_user(user_id)
         if not user:
             return {'error': 'User not found'}, 404
+        api.logger.info('Passed Not found')
+
+        current_user = get_jwt_identity()
+        if not current_user:
+            return {'error': 'Unauthorized action'}, 403
+        api.logger.info('Passed Auth 1')
+
+        if user_id != current_user["id"]:
+            return {'error': 'Unauthorized action'}, 403
+        api.logger.info('Passed Auth 2')
+
         user_data = api.payload
+        api.logger.info(f'User data for update is {user_data}')
         try:
             facade.update_user(user_id, user_data)
             return {"message": "User updated successfully"}, 200

@@ -1,4 +1,6 @@
 from app.models.BaseModel import BaseModel
+
+
 class Place(BaseModel):
     def __init__(self, title, description, price, latitude, longitude, owner_id):
         super().__init__()

@@ -1,3 +1,4 @@
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 
@@ -23,7 +24,7 @@ place_model = api.model('Place', {
     'price': fields.Float(required=True, description='Price per night'),
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
-    'owner_id': fields.String(required=True, description='ID of the owner'),
+    #'owner_id': fields.String(required=True, description='ID of the owner'),
     'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
@@ -32,10 +33,17 @@ class PlaceList(Resource):
     @api.expect(place_model)
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Unauthorized action')
+    @jwt_required()
     def post(self):
         """Register a new Place"""
+
+        current_user = get_jwt_identity()
+        if not current_user:
+            return {'error': 'Unauthorized action'}, 403
+
         place_data = api.payload
-        
+
         try:
             new_place = facade.create_place(place_data)
             return {'id': new_place.id, 'title': new_place.title,
@@ -43,7 +51,7 @@ class PlaceList(Resource):
                     'price': new_place.price,
                     'latitude': new_place.latitude,
                     'longitude': new_place.longitude,
-                    'owner_id': new_place.owner_id,
+                    'owner_id': current_user["id"]
                     }, 201
         except ValueError as e:
             api.abort(400, e)
@@ -87,15 +95,22 @@ class PlaceResource(Resource):
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Unauthorized action')
+    @jwt_required()
     def put(self, place_id):
         """Update a place's information"""
         
         place = facade.get_place(place_id)
         if not place:
             return {'error': 'Place not found'}, 404
+
+        current_user = get_jwt_identity()
+        if place.owner_id != current_user["id"]:
+            return {'error': 'Unauthorized action'}, 403
+
         place_data = api.payload
         try:
             facade.update_place(place_id, place_data)
             return {"message": "Place updated successfully"}, 200
         except ValueError as e:
-            api.abort(400,e)
+            api.abort(400, e)

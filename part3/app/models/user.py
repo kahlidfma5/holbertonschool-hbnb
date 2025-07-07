@@ -98,6 +98,6 @@ class User(BaseModel):
         """
         Verifies if the provided password matches the hashed password.
         """
-        return self.bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self.password, password)
 
 
