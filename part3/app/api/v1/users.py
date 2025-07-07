@@ -13,6 +13,10 @@ user_model = api.model('User', {
     'email': fields.String(required=True, description='Email of the user'),
     'password': fields.String(required=True, description="User's passowrd")
 })
+user_update_model = api.model('UserUpdate', {
+    'first_name': fields.String(required=True, description='First name of the user'),
+    'last_name': fields.String(required=True, description='Last name of the user'),
+})
 
 @api.route('/')
 class UserList(Resource):
@@ -47,7 +51,7 @@ class UserResource(Resource):
             return {'error': 'User not found'}, 404
         return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
     
-    @api.expect(user_model)
+    @api.expect(user_update_model)
     @api.response(200, 'User updated successfully')
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
@@ -65,9 +69,9 @@ class UserResource(Resource):
             return {'error': 'Unauthorized action'}, 403
         api.logger.info('Passed Auth 1')
 
-        if user_id != current_user["id"]:
+        """if user_id != current_user["id"]:
             return {'error': 'Unauthorized action'}, 403
-        api.logger.info('Passed Auth 2')
+        api.logger.info('Passed Auth 2')"""
 
         user_data = api.payload
         api.logger.info(f'User data for update is {user_data}')
@@ -76,3 +80,12 @@ class UserResource(Resource):
             return {"message": "User updated successfully"}, 200
         except ValueError as e:
             api.abort(400, e)
+
+@api.route('/protected')
+class TestAuth(Resource):
+    @jwt_required()
+    def get(self):
+        # Access the identity of the current user with get_jwt_identity
+        current_user = get_jwt_identity()
+        return jsonify(logged_in_as=current_user), 200
+
