@@ -40,7 +40,9 @@ class ReviewList(Resource):
         if not user:
             return {'error': 'User not found'}, 404
 
-        if facade.is_place_reviewed_by_user(review_data["user_id"], review_data["place_id"]):
+        if len([item for item in facade.get_all_reviews()
+                if item.user_id == review_data["user_id"]
+                and item.place_id == review_data["place_id"]]) > 0:
             return {'error': 'You have already reviewed this place.'}, 400
 
         try:
