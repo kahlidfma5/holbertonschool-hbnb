@@ -33,14 +33,14 @@ class ReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         
-        if place.owner_id == current_user["id"]:
+        if place.owner_id == current_user:
             return {'error': 'You cannot review your own place.'}, 400
 
         user = facade.get_user(review_data["user_id"])
         if not user:
             return {'error': 'User not found'}, 404
 
-        if review_data["user_id"] == current_user["id"]:
+        if facade.is_place_reviewed_by_user(review_data["user_id"], review_data["place_id"]):
             return {'error': 'You have already reviewed this place.'}, 400
 
         try:
@@ -90,7 +90,7 @@ class ReviewResource(Resource):
             return {'error': 'Review not found'}, 404
 
         current_user = get_jwt_identity()
-        if review.user_id != current_user["id"]:
+        if review.user_id != current_user:
             return {'error': 'Unauthorized action'}, 403
 
         review_data = api.payload
@@ -110,7 +110,7 @@ class ReviewResource(Resource):
             return {'error': 'Review not found'}, 404
 
         current_user = get_jwt_identity()
-        if review.user_id != current_user["id"]:
+        if review.user_id != current_user:
             return {'error': 'Unauthorized action'}, 403
 
         facade.delete_review(review_id) 

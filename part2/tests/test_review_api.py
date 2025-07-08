@@ -2,6 +2,7 @@ import unittest
 from app import create_app
 import json
 
+
 class TestReviewEndpoints(unittest.TestCase):
 
     def setUp(self):
@@ -12,7 +13,8 @@ class TestReviewEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "janeaa_qdoe@example.com"
+            "email": "janeaa_qdoe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
@@ -38,7 +40,8 @@ class TestReviewEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "janedoe@example.com"
+            "email": "janedoe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
@@ -64,7 +67,8 @@ class TestReviewEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "janedoabc_tee@example.com"
+            "email": "janedoabc_tee@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
@@ -90,7 +94,8 @@ class TestReviewEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "jane_adoe@example.com"
+            "email": "jane_adoe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
@@ -124,7 +129,8 @@ class TestReviewEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "jane_yu7adoe@example.com"
+            "email": "jane_yu7adoe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']

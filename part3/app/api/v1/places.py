@@ -51,7 +51,7 @@ class PlaceList(Resource):
                     'price': new_place.price,
                     'latitude': new_place.latitude,
                     'longitude': new_place.longitude,
-                    'owner_id': current_user["id"]
+                    'owner_id': current_user
                     }, 201
         except ValueError as e:
             api.abort(400, e)
@@ -105,7 +105,7 @@ class PlaceResource(Resource):
             return {'error': 'Place not found'}, 404
 
         current_user = get_jwt_identity()
-        if place.owner_id != current_user["id"]:
+        if place.owner_id != current_user:
             return {'error': 'Unauthorized action'}, 403
 
         place_data = api.payload

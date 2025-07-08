@@ -2,6 +2,7 @@ import unittest
 from app import create_app
 import json
 
+
 class TestPlaceEndpoints(unittest.TestCase):
 
     def setUp(self):
@@ -12,7 +13,8 @@ class TestPlaceEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "jane_doe@example.com"
+            "email": "jane_doe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
@@ -27,7 +29,7 @@ class TestPlaceEndpoints(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_create_place_invalid_user(self):
-        response = self.client.post('/api/v1/users/', json={
+        response = self.client.post('/api/v1/places/', json={
             'title': 'title',
             'description': 'description',
             'price': 100,
@@ -41,7 +43,8 @@ class TestPlaceEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "janexdoe@example.com"
+            "email": "janexdoe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
@@ -66,7 +69,8 @@ class TestPlaceEndpoints(unittest.TestCase):
         response = self.client.post('/api/v1/users/', json={
             "first_name": "Jane",
             "last_name": "Doe",
-            "email": "ajanexdoe@example.com"
+            "email": "ajanexdoe@example.com",
+            "password": "password"
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
