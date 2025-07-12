@@ -1,9 +1,8 @@
 from app.models.BaseModel import BaseModel
 from sqlalchemy import String
 from sqlalchemy.orm import  mapped_column
-from app.database import db
 
-class Amenity(db.Model):
+class Amenity(BaseModel):
 
     __tablename__ = 'amenities'
 

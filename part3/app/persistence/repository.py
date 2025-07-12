@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
+
+from sqlalchemy import text
 from app.database import db
+from app.models import BaseModel
 
 class Repository(ABC):
     @abstractmethod
@@ -55,17 +58,17 @@ class InMemoryRepository(Repository):
 
 class SQLAlchemyRepository(Repository):
     def __init__(self, model):
-        self.model = model
+        self.model:BaseModel = model
 
     def add(self, obj):
         db.session.add(obj)
         db.session.commit()
 
     def get(self, obj_id):
-        return self.model.query.get(obj_id)
+        return db.session.get(self.model,obj_id)
 
     def get_all(self):
-        return self.model.query.all()
+        return db.session.query(self.model).all()
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
@@ -81,4 +84,4 @@ class SQLAlchemyRepository(Repository):
             db.session.commit()
 
     def get_by_attribute(self, attr_name, attr_value):
-        return self.model.query.filter(getattr(self.model, attr_name) == attr_value).first()
+        return db.session.query(self.model).where(text(f"{attr_name}={attr_value}"))

@@ -1,6 +1,7 @@
 from flask_jwt_extended import get_jwt_identity, jwt_required, get_jwt
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from flask import logging
 
 api = Namespace('users', description='User operations')
 
@@ -26,6 +27,7 @@ class UserList(Resource):
 
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
         existing_user = facade.get_user_by_email(user_data['email'])
+        api.logger.info(existing_user)
         if existing_user:
             return {'error': 'Email already registered'}, 400
 

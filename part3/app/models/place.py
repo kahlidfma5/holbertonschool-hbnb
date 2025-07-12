@@ -1,10 +1,9 @@
 from app.models.BaseModel import BaseModel
 from sqlalchemy import Float, String
 from sqlalchemy.orm import  mapped_column
-from app.database import db
 
 
-class Place(db.Model):
+class Place(BaseModel):
     __tablename__ = 'places'
 
     title = mapped_column(String(50), nullable=False)
