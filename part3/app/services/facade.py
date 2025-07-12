@@ -13,7 +13,10 @@ class HBnBFacade:
         self.amenity_repo = SQLAlchemyRepository(Amenity)
 
     def create_user(self, user_data):
+        
+        print(f'Facade User data:{user_data}')
         user = User(**user_data)
+        print(f'Facade Password->{user.password}')
         self.user_repo.add(user)
         return user
     

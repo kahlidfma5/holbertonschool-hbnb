@@ -23,61 +23,8 @@ class Place(BaseModel):
         self.owner_id = owner_id
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
-    
 
-    @property
-    def price(self):
-        """
-        Get the place price.
-        """
-        return self.__price
-    @price.setter
-    def price(self, value):
-        """
-        Set the place price.
-        """
-        if value < 0:
-            raise ValueError(
-                'The price should be a non-negative float.'
-                )
-        self.__price = value
-    
-    @property
-    def latitude(self):
-        """
-        Get the place latitude.
-        """
-        return self.__latitude
-        
-    @latitude.setter
-    def latitude(self, value):
-        """
-        Set the place latitude.
-        """
-        if value < -90 or value > 90:
-            raise ValueError(
-                'The latitude should be between -90 and 90.'
-                )
-        self.__latitude = value
-    
-    @property
-    def longitude(self):
-        """
-        Get the place longitude.
-        """
-        return self.__longitude
-        
-    @longitude.setter
-    def longitude(self, value):
-        """
-        Set the place longitude.
-        """
-        if value < -180 or value > 180:
-            raise ValueError(
-                'The longitude should be between -180 and 180.'
-                )
-        self.__longitude = value
-        
+
     def add_review(self, review):
         """Add a review to the place."""
         self.reviews.append(review)

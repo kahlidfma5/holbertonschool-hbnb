@@ -30,6 +30,8 @@ class UserList(Resource):
         api.logger.info(existing_user)
         if existing_user:
             return {'error': 'Email already registered'}, 400
+        
+        # print(f'User data:{user_data}')
 
         try:
             new_user = facade.create_user(user_data)
