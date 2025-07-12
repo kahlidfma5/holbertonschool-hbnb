@@ -1,7 +1,17 @@
 from app.models.BaseModel import BaseModel
-
+from sqlalchemy import Float, String
+from sqlalchemy.orm import  mapped_column
 
 class Place(BaseModel):
+    __tablename__ = 'places'
+
+    title = mapped_column(String(50), nullable=False)
+    description = mapped_column(String(255), nullable=False)
+    price = mapped_column(Float, nullable=False)
+    latitude = mapped_column(Float, nullable=False)
+    longitude = mapped_column(Float, nullable=False)
+
+        
     def __init__(self, title, description, price, latitude, longitude, owner_id):
         super().__init__()
         self.title = title
