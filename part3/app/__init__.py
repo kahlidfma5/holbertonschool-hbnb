@@ -8,7 +8,7 @@ from app.api.v1.auth import api as auth_ns
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
-from database import db
+from app.database import db
 
 bcrypt = Bcrypt()
 jwt = JWTManager()

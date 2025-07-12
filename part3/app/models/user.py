@@ -2,9 +2,11 @@ from app.models.BaseModel import BaseModel
 from flask_bcrypt import Bcrypt
 from sqlalchemy import Boolean, String
 from sqlalchemy.orm import  mapped_column
+from app.database import db
+
 
 bcrypt = Bcrypt()
-class User(BaseModel):
+class User(db.Model):
     __tablename__ = 'users'
 
     first_name = mapped_column(String(50), nullable=False)

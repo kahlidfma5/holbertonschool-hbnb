@@ -2,11 +2,10 @@ import uuid
 from datetime import datetime
 from sqlalchemy import DateTime, String
 from sqlalchemy.orm import  mapped_column
-from sqlalchemy.ext.declarative import declarative_base
+from app.database import db
 
-Base = declarative_base()
 
-class BaseModel(Base):
+class BaseModel(db.Model):
     __abstract__ = True  # This ensures SQLAlchemy does not create a table for BaseModel
 
     id = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))

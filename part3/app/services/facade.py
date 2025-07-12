@@ -77,8 +77,4 @@ class HBnBFacade:
 
     def delete_review(self, review_id):
         self.review_repo.delete(review_id)
-    
-    def is_place_reviewed_by_user(self, user_id, place_id):
-        return len([item for item in self.get_all_reviews()
-                    if item.user_id == user_id
-                    and item.place_id == place_id]) > 0
+
