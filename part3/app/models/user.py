@@ -1,7 +1,7 @@
 from app.models.BaseModel import BaseModel
 from flask_bcrypt import Bcrypt
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import  mapped_column
+from sqlalchemy.orm import mapped_column, relationship
 
 
 bcrypt = Bcrypt()
@@ -13,6 +13,9 @@ class User(BaseModel):
     email = mapped_column(String(120), nullable=False, unique=True)
     password = mapped_column(String(128), nullable=False)
     is_admin = mapped_column(Boolean, default=False)
+
+    places = relationship('Place', backref='user', lazy=True)
+    reviews = relationship('Review', backref='user', lazy=True)
         
     def __init__(self, first_name, last_name, email, password, is_admin=False):
         super().__init__()
