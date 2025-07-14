@@ -16,9 +16,9 @@ class TestPlaceEndpoints(unittest.TestCase):
             "email": "jane_doe@example.com",
             "password": "password"
         })
+        print(f'Create Place User Response: {response.get_json()}')
         created_user = json.loads(response.data)
         user_id = created_user['id']
-        print(f'Created user ID: {user_id}')
         response = self.client.post('/api/v1/auth/login', json={
             "email": "jane_doe@example.com",
             "password": "password"})
