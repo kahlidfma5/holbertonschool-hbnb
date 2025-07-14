@@ -1,5 +1,5 @@
 from app.models.BaseModel import BaseModel
-from sqlalchemy import Float, ForeignKey, Integer, String
+from sqlalchemy import Float, ForeignKey, String
 from sqlalchemy.orm import mapped_column, relationship
 
 
@@ -14,8 +14,9 @@ class Place(BaseModel):
     user_id = mapped_column(String(36), ForeignKey('users.id'), nullable=False)
 
     user = relationship("User", back_populates="places")
-    reviews = relationship('Review', backref='place', lazy=True)
-    places_amenities = relationship("Places_Amenities", back_populates="amenity", cascade="all, delete-orphan")
+    reviews = relationship("Review", back_populates="place", cascade="all, delete-orphan")
+    places_amenities = relationship("Place_Amenity", back_populates="place", cascade="all, delete-orphan")
+
 
         
     def __init__(self, title, description, price, latitude, longitude, owner_id):
@@ -26,8 +27,6 @@ class Place(BaseModel):
         self.latitude = latitude
         self.longitude = longitude
         self.owner_id = owner_id
-        self.reviews = []  # List to store related reviews
-        self.amenities = []  # List to store related amenities
 
 
     def add_review(self, review):

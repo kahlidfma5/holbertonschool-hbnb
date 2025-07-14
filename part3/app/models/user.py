@@ -1,21 +1,24 @@
+from typing import List
 from app.models.BaseModel import BaseModel
 from flask_bcrypt import Bcrypt
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import mapped_column, relationship
+from sqlalchemy.orm import mapped_column
+from app.database import db
+
 
 
 bcrypt = Bcrypt()
 class User(BaseModel):
     __tablename__ = 'users'
 
-    first_name = mapped_column(String(50), nullable=False)
-    last_name = mapped_column(String(50), nullable=False)
-    email = mapped_column(String(120), nullable=False, unique=True)
-    password = mapped_column(String(128), nullable=False)
+    first_name = mapped_column(String(255), nullable=False)
+    last_name = mapped_column(String(255), nullable=False)
+    email = mapped_column(String(255), nullable=False, unique=True)
+    password = mapped_column(String(255), nullable=False)
     is_admin = mapped_column(Boolean, default=False)
 
-    places = relationship('Place', backref='user', lazy=True)
-    reviews = relationship('Review', backref='user', lazy=True)
+    places = db.relationship("Place", back_populates="user", cascade="all, delete-orphan")
+    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
         
     def __init__(self, first_name, last_name, email, password, is_admin=False):
         super().__init__()
