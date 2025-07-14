@@ -27,7 +27,7 @@ class UserList(Resource):
 
         # Simulate email uniqueness check (to be replaced by real validation with persistence)
         existing_user = facade.get_user_by_email(user_data['email'])
-        api.logger.info(existing_user)
+        api.logger.info(f'existing_user: {existing_user}')
         if existing_user:
             return {'error': 'Email already registered'}, 400
         
@@ -46,6 +46,7 @@ class UserResource(Resource):
     def get(self, user_id):
         """Get user details by ID"""
         user = facade.get_user(user_id)
+        api.logger.info(f'Get User: {user}')
         if not user:
             return {'error': 'User not found'}, 404
         return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
@@ -64,13 +65,8 @@ class UserResource(Resource):
 
         current_user = get_jwt_identity()
         is_admin = get_jwt()['is_admin']
-        api.logger.info(f"{is_admin}")
+        api.logger.info(f"is admin:{is_admin}")
 
-        if is_admin:
-            api.logger.info("True")
-        else:
-            api.logger.info("False")
-        
         if not current_user:
             return {'error': 'Unauthorized action'}, 403
 

@@ -24,7 +24,7 @@ class TestUserEndpoints(unittest.TestCase):
             "last_name": "admin",
             "email": "admin@example.com",
             "password": "password",
-            "is_admin": True
+            "is_admin": 1
         })
         self.assertEqual(response.status_code, 201)
     def test_create_user_invalid_data(self):

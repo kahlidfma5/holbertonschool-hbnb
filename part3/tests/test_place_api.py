@@ -18,6 +18,7 @@ class TestPlaceEndpoints(unittest.TestCase):
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
+        print(f'Created user ID: {user_id}')
         response = self.client.post('/api/v1/auth/login', json={
             "email": "jane_doe@example.com",
             "password": "password"})
@@ -43,6 +44,7 @@ class TestPlaceEndpoints(unittest.TestCase):
         })
         created_user = json.loads(response.data)
         user_id = created_user['id']
+        print(f'Created user ID: {user_id}')
         
         response = self.client.post('/api/v1/auth/login', json={
             "email": "janexdoe@example.com",

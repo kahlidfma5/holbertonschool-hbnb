@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-from sqlalchemy import text
 from app.database import db
 from app.models import BaseModel
 
@@ -56,19 +55,23 @@ class InMemoryRepository(Repository):
         return next((obj for obj in self._storage.values() if getattr(obj, attr_name) == attr_value), None)
 
 
-class SQLAlchemyRepository(Repository):
-    def __init__(self, model):
-        self.model:BaseModel = model
 
+class SQLAlchemyRepository(Repository):
+    """Generic repository that delegates CRUD operations to SQLAlchemy."""
+
+    def __init__(self, model):
+        self.model = model
+
+    # -------- CRUD --------
     def add(self, obj):
         db.session.add(obj)
         db.session.commit()
 
     def get(self, obj_id):
-        return db.session.get(self.model,obj_id)
+        return self.model.query.get(obj_id)
 
     def get_all(self):
-        return db.session.query(self.model).all()
+        return self.model.query.all()
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
@@ -83,7 +86,8 @@ class SQLAlchemyRepository(Repository):
             db.session.delete(obj)
             db.session.commit()
 
+    # -------- extra helpers --------
     def get_by_attribute(self, attr_name, attr_value):
-        # return self.model.query.where(text(f"{attr_name}='{attr_value}'")).first()
-        # #return db.session.query(self.model).where(text(f"{attr_name}={attr_value}"))
-        return self.model.query.filter_by(**{attr_name: attr_value}).first()
+        return (
+            self.model.query.filter_by(**{attr_name: attr_value}).first()
+        )
