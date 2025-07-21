@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Details</title>
+    <link rel="icon" type="image/png" href="/images/icon.png">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <section id="place-details">
+            <h2>place name</h2>
+            <h4>Your Host</h4>
+            <p>host 1</p>
+            <h4>Price per night</h4>
+            <p>100 SAR</p>
+            <h4>Description</h4>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, illo minima voluptatum, quidem
+                repudiandae cum sint soluta voluptate fugit aliquid nesciunt debitis quisquam quae? Quo molestias sequi
+                fugiat culpa porro.</p>
+            <h4>Amenities</h4>
+            <p>Wifi,Pool, Air conditioning</p>
+        </section>
+        <section id="reviews">
+            <!-- Reviews will be populated dynamically -->
+            <ul>
+                <li>
+                    <b>Hamad:</b>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, doloribus? Temporibus magnam
+                        pariatur exercitationem hic sed, ratione laudantium incidunt at. Magnam delectus recusandae unde
+                        consequatur necessitatibus commodi laboriosam atque dolores.</p>
+                    <b>Rating:</b>5
+                </li>
+                <li>
+                    <b>Hamad:</b>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, doloribus? Temporibus magnam
+                        pariatur exercitationem hic sed, ratione laudantium incidunt at. Magnam delectus recusandae unde
+                        consequatur necessitatibus commodi laboriosam atque dolores.</p>
+                    <b>Rating:</b>3
+                </li>
+                <li>
+                    <b>Hamad:</b>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, doloribus? Temporibus magnam
+                        pariatur exercitationem hic sed, ratione laudantium incidunt at. Magnam delectus recusandae unde
+                        consequatur necessitatibus commodi laboriosam atque dolores.</p>
+                    <b>Rating:</b>1
+                </li>
+            </ul>
+        </section>
+        <section id="add-review">
+            <h2>Add a Review</h2>
+            <form id="review-form">
+                <label for="review-text">Review:</label>
+                <textarea id="review-text" name="review-text" required></textarea>
+                <label for="rating">Rating</label>
+                <select name="rating" id="rating">
+                    <option value="">--Please choose a rating-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
