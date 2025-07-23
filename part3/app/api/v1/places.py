@@ -67,6 +67,11 @@ class PlaceList(Resource):
                 'latitude': place.latitude,
                 'longitude': place.longitude,
                 'owner_id': place.owner_id,
+                'reviews':[{"id": review.id, "text": review.text,
+                            "rating": review.rating,
+                            "user_id": review.user_id,
+                            "user_name": f"{review.user.first_name} {review.user.last_name}"}
+                            for review in place.reviews ]
                 } for place in places], 200
 
 @api.route('/<place_id>')
