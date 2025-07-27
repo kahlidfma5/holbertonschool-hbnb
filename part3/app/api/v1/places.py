@@ -67,6 +67,7 @@ class PlaceList(Resource):
                 'latitude': place.latitude,
                 'longitude': place.longitude,
                 'owner_id': place.owner_id,
+                'amenities':[{"name": place_amenity.amenity.name} for place_amenity in place.places_amenities],
                 'reviews':[{"id": review.id, "text": review.text,
                             "rating": review.rating,
                             "user_id": review.user_id,
@@ -89,11 +90,12 @@ class PlaceResource(Resource):
                 'price': place.price,
                 'latitude': place.latitude,
                 'longitude': place.longitude,
-                'owner_id': place.owner_id,
+               "user_name": f"{place.user.first_name} {place.user.last_name}",
+                 'amenities':[{"name": place_amenity.amenity.name} for place_amenity in place.places_amenities],
                 'reviews': [{'id': review.id, 'text': review.text,
                              'rating': review.rating,
-                             'user_id': review.user_id,
-                             'place_id': review.place_id,
+                            "user_id": review.user_id,
+                            "user_name": f"{review.user.first_name} {review.user.last_name}"
                              } for review in reviews]
                 }, 200
 

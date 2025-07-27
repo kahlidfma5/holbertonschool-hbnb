@@ -4,20 +4,22 @@
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('price-filter').addEventListener('change', (event) => {
-    // Get the selected price value
-    places = document.getElementById("places-list").children;
-    for (place of places) {
-      if (document.getElementById("price-filter").value == "All" ||
-        place.children[1].innerHTML === document.getElementById("price-filter").value) {
+  console.log(queryString(window.location.href).id);
+  if (document.getElementById('price-filter'))
+    document.getElementById('price-filter').addEventListener('change', (event) => {
+      // Get the selected price value
+      places = document.getElementById("places-list").children;
+      for (place of places) {
+        if (document.getElementById("price-filter").value == "All" ||
+          place.children[1].innerHTML === document.getElementById("price-filter").value) {
 
-        place.style.display = "block";
+          place.style.display = "block";
+        }
+        else if (place.children[1].innerHTML !== document.getElementById("price-filter").value) {
+          place.style.display = "none";
+        }
       }
-      else if (place.children[1].innerHTML !== document.getElementById("price-filter").value) {
-        place.style.display = "none";
-      }
-    }
-  });
+    });
   console.log("Loading");
   if (!(document.getElementById('login-form'))) {
     console.log("No Login");
@@ -58,15 +60,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function checkAuthentication() {
   const token = getCookie("token");
-  const loginLink = document.getElementById('login-link');
+
   console.log(token);
 
   if (!token) {
-    loginLink.style.display = 'block';
+    if (document.getElementById('login-link'))
+      document.getElementById('login-link').style.display = 'block';
+    if (document.getElementById('add-review'))
+      document.getElementById('add-review').style.display = 'none';
   } else {
-    loginLink.style.display = 'none';
+    if (document.getElementById('login-link'))
+      document.getElementById('login-link').style.display = 'none';
+    if (document.getElementById('add-review'))
+      document.getElementById('add-review').style.display = 'block';
     // Fetch places data if the user is authenticated
-    fetchPlaces(token);
+    if (document.getElementById('places-list'))
+      fetchPlaces(token);
+    if (document.getElementById('place-details'))
+      fetchPlaceDetails(token, queryString(window.location.href).id);
   }
 }
 function getCookie(name) {
@@ -74,12 +85,8 @@ function getCookie(name) {
   console.log(cindex);
   return document.cookie.substring(cindex + name.length + 1);
 }
-function getPlaces() {
-  console.log("PLACES");
-}
 
 async function fetchPlaces(token) {
-  console.log("I am called");
   const url = "http://127.0.0.1:5000/api/v1/places/";
   try {
     const response = await fetch(url, {
@@ -100,6 +107,87 @@ async function fetchPlaces(token) {
   catch (error) {
     console.log(error.message);
   }
+}
+
+async function fetchPlaceDetails(token, placeId) {
+  console.log("ID=" + placeId);
+  // Make a GET request to fetch place details
+  // Include the token in the Authorization header
+  // Handle the response and pass the data to displayPlaceDetails function
+  const url = "http://127.0.0.1:5000/api/v1/places/" + placeId;
+  try {
+    const response = await fetch(url, {
+      headers: {
+       "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    res = await response.json();
+    displayPlaceDetails(res);
+  }
+  catch (error) {
+    console.log(error.message);
+  }
+}
+function displayPlaceDetails(place) {
+  console.log(place);
+  document.getElementById('place-name').innerHTML = place.title;
+  document.getElementById('place-host').innerHTML = place.user_name;
+  document.getElementById('place-price').innerHTML = place.price;
+  document.getElementById('place-description').innerHTML = place.description;
+
+  document.getElementById("reviews-list").innerHTML = "";
+  html_reviews = document.getElementById("reviews-list")
+  // Iterate over the places data
+  // For each place, create a div element and set its content
+  // Append the created element to the places list
+
+  place.reviews.forEach(element => {
+    review_ul = document.createElement("ul");
+    html_reviews.appendChild(review_ul);
+
+    review_li = document.createElement('li');
+    review_ul.appendChild(review_li);
+
+    review_user = document.createElement("b");
+    review_user.innerHTML = element.user_name+":";
+    review_li.appendChild(review_user);
+
+    review_text = document.createElement("p");
+    review_text.innerHTML = element.text;
+    review_li.appendChild(review_text);
+
+    review_rating = document.createElement("b");
+    review_rating.innerHTML = "Rating:";
+    review_li.appendChild(review_rating);
+    review_li.innerHTML = review_li.innerHTML + element.rating;
+
+  });
+
+  // Clear the current content of the place details section
+  // Create elements to display the place details (name, description, price, amenities and reviews)
+  // Append the created elements to the place details section
+}
+function queryString(url) {
+  console.log(url);
+  const query = url.split('?')[1];
+  const params = {};
+
+  if (query) {
+    const pairs = query.split('&');
+    for (const pair of pairs) {
+      const [key, value] = pair.split('=');
+      params[key] = decodeURIComponent(value
+        .replace(/\+/g, ' '));
+    }
+  }
+
+  return params;
 }
 function displayPlaces(places) {
   // Clear the current content of the places list
@@ -123,7 +211,7 @@ function displayPlaces(places) {
 
     place_link = document.createElement("a");
     place_link.innerHTML = "View Details";
-    place_link.href = "/place/" + element.id;
+    place_link.href = "place.html?id=" + element.id;
     place_card.appendChild(place_link);
 
   });

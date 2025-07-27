@@ -1,7 +1,6 @@
 from app.models.BaseModel import BaseModel
 from sqlalchemy import String
-from sqlalchemy.orm import mapped_column, validates
-from app.database import db
+from sqlalchemy.orm import mapped_column, validates, relationship
 from app.models.place_amenity import Place_Amenity
 
 class Amenity(BaseModel):
@@ -9,7 +8,7 @@ class Amenity(BaseModel):
     __tablename__ = 'amenities'
 
     name = mapped_column(String(50), nullable=False)
-    places_amenities = db.relationship("Place_Amenity", back_populates="amenity", cascade="all, delete-orphan")
+    places_amenities = relationship("Place_Amenity", back_populates="amenity", cascade="all, delete-orphan")
  
         
     def __init__(self, name):
