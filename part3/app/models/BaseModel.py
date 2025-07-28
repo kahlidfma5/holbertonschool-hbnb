@@ -1,9 +1,11 @@
+from dataclasses import dataclass
 import uuid
 from datetime import datetime
 from sqlalchemy import DateTime, String
 from sqlalchemy.orm import  mapped_column
 from app.database import db
 
+@dataclass
 class BaseModel(db.Model):
     __abstract__ = True  # This ensures SQLAlchemy does not create a table for BaseModel
 

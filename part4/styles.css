@@ -41,13 +41,13 @@ main {
 }
 
 #place-details,
-#reviews li {
+#reviews-list li {
     margin: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
 }
 
-#reviews li {
+#reviews-list li {
     list-style-type: none;
 }

@@ -48,11 +48,47 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(json['access_token']);
 
         document.cookie = "token=" + json['access_token'];
+        document.cookie = 'id='+json['id'];
         console.log("I am redirecting");
         window.location = "index.html"
       } catch (error) {
         console.error(error.message);
       }
+    });
+
+  }
+  if (document.getElementById('review-form')) {
+    document.getElementById('review-form').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevents the browser from navigating to example.com
+      const url = "http://127.0.0.1:5000/api/v1/reviews/";
+      const token = getCookie('token');
+      if (token) {
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+              text: document.getElementById("review-text").value,
+              rating: parseFloat(document.getElementById("rating").value),
+              user_id: getCookie('id'),
+              place_id: queryString(window.location.href).id
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + getCookie('token'),
+              "Accept": "application/json"
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+          }
+
+          window.location.reload();
+        } catch (error) {
+          console.error(error.message);
+        }
+      }
+
+
     });
 
   }
@@ -79,11 +115,25 @@ function checkAuthentication() {
     if (document.getElementById('place-details'))
       fetchPlaceDetails(token, queryString(window.location.href).id);
   }
+  return token;
 }
 function getCookie(name) {
-  cindex = document.cookie.indexOf(name);
-  console.log(cindex);
-  return document.cookie.substring(cindex + name.length + 1);
+  let cookieArr = document.cookie.split(";");
+    
+    // Loop through the array elements
+    for(let i = 0; i < cookieArr.length; i++) {
+        let cookiePair = cookieArr[i].split("=");
+        
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if(name == cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    
+    // Return null if not found
+    return null;
 }
 
 async function fetchPlaces(token) {
@@ -110,7 +160,7 @@ async function fetchPlaces(token) {
 }
 
 async function fetchPlaceDetails(token, placeId) {
-  console.log("ID=" + placeId);
+ // console.log("ID=" + placeId);
   // Make a GET request to fetch place details
   // Include the token in the Authorization header
   // Handle the response and pass the data to displayPlaceDetails function
@@ -118,7 +168,7 @@ async function fetchPlaceDetails(token, placeId) {
   try {
     const response = await fetch(url, {
       headers: {
-       "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + token,
         "Content-Type": "application/json",
         "Accept": "application/json"
       }
@@ -155,7 +205,7 @@ function displayPlaceDetails(place) {
     review_ul.appendChild(review_li);
 
     review_user = document.createElement("b");
-    review_user.innerHTML = element.user_name+":";
+    review_user.innerHTML = element.user_name + ":";
     review_li.appendChild(review_user);
 
     review_text = document.createElement("p");

@@ -2,8 +2,7 @@ from typing import List
 from app.models.BaseModel import BaseModel
 from flask_bcrypt import Bcrypt
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import mapped_column, validates
-from app.database import db
+from sqlalchemy.orm import mapped_column, validates, relationship
 
 
 
@@ -17,8 +16,8 @@ class User(BaseModel):
     password = mapped_column(String(255), nullable=False)
     is_admin = mapped_column(Boolean, default=False)
 
-    places = db.relationship("Place", back_populates="user", cascade="all, delete-orphan")
-    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
+    places = relationship("Place", back_populates="user", cascade="all, delete-orphan")
+    reviews = relationship("Review", back_populates="user", cascade="all, delete-orphan")
         
     def __init__(self, first_name, last_name, email, password, is_admin=False):
         super().__init__()
