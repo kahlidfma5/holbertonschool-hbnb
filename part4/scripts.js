@@ -187,9 +187,9 @@ async function fetchPlaceDetails(token, placeId) {
 function displayPlaceDetails(place) {
   console.log(place);
   document.getElementById('place-name').innerHTML = place.title;
-  document.getElementById('place-host').innerHTML = place.user_name;
-  document.getElementById('place-price').innerHTML = place.price;
-  document.getElementById('place-description').innerHTML = place.description;
+  document.getElementById('place-host').innerHTML = "<b>Host: </b>"+place.user_name;
+  document.getElementById('place-price').innerHTML = "<b>Price Per Night: $</b>"+place.price;
+  document.getElementById('place-description').innerHTML = "<b>Description: </b>"+place.description;
 
   document.getElementById("reviews-list").innerHTML = "";
   html_reviews = document.getElementById("reviews-list")
@@ -212,10 +212,10 @@ function displayPlaceDetails(place) {
     review_text.innerHTML = element.text;
     review_li.appendChild(review_text);
 
-    review_rating = document.createElement("b");
-    review_rating.innerHTML = "Rating:";
+    review_rating = document.createElement("p");
+    review_rating.innerHTML = "<b>Rating: </b> "+element.rating;
     review_li.appendChild(review_rating);
-    review_li.innerHTML = review_li.innerHTML + element.rating;
+    //review_li.innerHTML = review_li.innerHTML + element.rating;
 
   });
 
@@ -251,12 +251,12 @@ function displayPlaces(places) {
     place_card.classList.add("place-card");
     html_places.appendChild(place_card);
 
-    place_title = document.createElement("b");
+    place_title = document.createElement("h3");
     place_title.innerHTML = element.title;
     place_card.appendChild(place_title);
 
     place_price = document.createElement("p");
-    place_price.innerHTML = element.price;
+    place_price.innerHTML = 'Price per night: $'+element.price;
     place_card.appendChild(place_price);
 
     place_link = document.createElement("a");
